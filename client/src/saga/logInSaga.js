@@ -11,9 +11,14 @@ function* doLogInSaga({ data }) {
         headers: { 'Content-Type': 'application/json' },
       })
     const post = yield response.json()
-    console.log(post.message || post.email)
+
+    localStorage.setItem('userInfo', JSON.stringify({
+      userId: post.userId, token: post.token
+    }))
+    
+    console.log('post:', post)
   } catch (error) {
-    console.log('saga error')
+    console.log('saga login error')
   }
 }
 

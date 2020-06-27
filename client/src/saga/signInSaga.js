@@ -13,7 +13,7 @@ function* doSignInSaga({ data }) {
     const post = yield response.json()
     console.log(post.message)
   } catch (error) {
-    console.log('saga error')
+    console.log('saga sign error')
   }
 }
 
