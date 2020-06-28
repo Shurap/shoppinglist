@@ -6,17 +6,16 @@ const middlewareAuth = (req, res, next) => {
     const token = req.headers.authorization.split(' ')[1]
 
     if (!token) {
-      return res.json({ message: 'Нет авторизации' })
+      return res.json({ message: 'No token provided' })
     }
 
     const decoded = jwt.verify(token, process.env.SECRET)
-    console.log('decoded: ', decoded)
     req.user = decoded
 
     next()
 
   } catch {
-    res.json({ message: 'нет авторизации' })
+    res.json({ message: 'Failed to authenticate token' })
   }
 }
 
