@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
-import { doSignInSaga } from '../../redux/actions/actionSignIn'
+import { SignUpForSaga } from '../../redux/actions/actionSignUp'
 import { useDispatch } from 'react-redux';
 
 const PageRegister = () => {
@@ -17,7 +17,7 @@ const PageRegister = () => {
   }
 
   const request = async () => {
-    dispatch(doSignInSaga(form))
+    dispatch(SignUpForSaga(form))
   }
 
   return (

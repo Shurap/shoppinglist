@@ -4,14 +4,16 @@ import {
 
 const initialState = {
   email: '',
-  password: ''
+  name: ''
 };
 
 function user(state = initialState, action) {
   switch (action.type) {
 
+    //TODO add field name to page register (maybe)
+
     case ADD_USER_TO_STORE:
-      return {...state, email: action.data.email, password: action.data.password};
+      return {...state, email: action.data.email, name: action.data.name};
 
     default:
       return state;
