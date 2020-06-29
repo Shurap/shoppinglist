@@ -9,8 +9,8 @@ const jwt = require('jsonwebtoken')
 router.post(
   '/register',
   [
-    check('email', 'Некорректный email').isEmail(),
-    check('password', 'Минимальная длина пароля 6 символов').isLength({ min: 6 })
+    check('email', 'Wrong email').isEmail(),
+    check('password', 'Minimal lenght of password is 6 letters').isLength({ min: 6 })
   ],
   async (req, res) => {
     try {
@@ -19,7 +19,7 @@ router.post(
       if (!errors.isEmpty()) {
         return res.json({
           errors: errors.array(),
-          message: 'Некорректные данные при регистрации'
+          message: 'Incorrect registration data'
         })
       }
 
@@ -28,7 +28,7 @@ router.post(
       const candidate = await User.findOne({ email })
 
       if (candidate) {
-        return res.json({ message: 'Такой пользователь уже существует' })
+        return res.json({ message: 'This user already exists' })
       }
 
       const hashedPassword = await bcrypt.hash(password, 12)
@@ -36,10 +36,10 @@ router.post(
 
       await user.save()
 
-      res.json({ message: 'Пользователь создан' })
+      res.json({ message: 'User created' })
 
     } catch (err) {
-      res.json({ message: 'Что-то пошло не так, попробуйте снова' })
+      res.json({ message: 'Something went wrong, try again' })
     }
   }
 )
