@@ -1,0 +1,3 @@
+export const SIGN_UP_FOR_SAGA = 'SIGN_UP_FOR_SAGA'
+
+export const ADD_USER_TO_STORE = 'ADD_USER_TO_STORE'
