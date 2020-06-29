@@ -48,8 +48,8 @@ router.post(
 router.post(
   '/login',
   [
-    check('email', 'Некорректный email').isEmail(),
-    check('password', 'Введите пароль').exists()
+    check('email', 'Incorrect email').isEmail(),
+    check('password', 'Enter password').exists()
   ],
   async (req, res) => {
     try {
@@ -59,7 +59,7 @@ router.post(
       if (!errors.isEmpty()) {
         return res.json({
           errors: errors.array(),
-          message: 'Некорректные данные при входе в систему'
+          message: 'Incorrect data'
         })
       }
 
@@ -68,14 +68,14 @@ router.post(
       const user = await User.findOne({ email })
 
       if (!user) {
-        return res.json({ message: 'Пользователь не найден' })
+        return res.json({ message: 'User not found' })
       }
 
-      const isMatch = await bcrypt.compare(password, user.password)
+      // const isMatch = await bcrypt.compare(password, user.password)
 
-      if (!isMatch) {
-        return res.json({ message: 'Неверный пароль, попробуйте снова' })
-      }
+      // if (!isMatch) {
+      //   return res.json({ message: 'Wrong password' })
+      // }
 
       const token = jwt.sign(
         { userId: user.id },
@@ -83,10 +83,14 @@ router.post(
         { expiresIn: '1h' }
       )
 
-      res.json({ token, userId: user.id, email: user.email })
+      res.json({
+        token,
+        userId: user.id,
+        email: user.email, message: 'You logged'
+      })
 
     } catch (err) {
-      res.json({ message: 'Что-то пошло не так, попробуйте снова' })
+      res.json({ message: 'Something went wrong, try again' })
     }
   }
 )

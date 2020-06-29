@@ -17,10 +17,6 @@ function* doSignInSaga({ data }) {
   }
 }
 
-
-
-
-
 export function* signInSaga() {
   yield takeEvery(DO_SIGN_IN_SAGA, doSignInSaga);
 }

@@ -4,6 +4,7 @@ import { addUserToStore } from '../redux/actions/actionUser'
 
 function* doLogInSaga({ data }) {
   try {
+    console.log('saga login')
     const response = yield fetch('/auth/login',
       {
         method: 'POST',
@@ -15,8 +16,7 @@ function* doLogInSaga({ data }) {
     localStorage.setItem('userInfo', JSON.stringify({
       userId: post.userId, token: post.token
     }))
-    
-    console.log('post:', post)
+    console.log(post.message)
   } catch (error) {
     console.log('saga login error')
   }
