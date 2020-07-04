@@ -4,7 +4,6 @@ import { addUserToStore } from '../redux/actions/actionUser'
 
 function* doLogInSaga({ data }) {
   try {
-    console.log('saga login')
     const response = yield fetch('/auth/login',
       {
         method: 'POST',

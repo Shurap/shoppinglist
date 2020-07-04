@@ -2,13 +2,13 @@ import { takeEvery, put } from 'redux-saga/effects'
 import { SIGN_UP_FOR_SAGA } from '../redux/constants'
 import { addUserToStore } from '../redux/actions/actionUser'
 
-function* SignUpForSaga({ data }) {
+function* signUpForSaga({ data }) {
   try {
 
     //TODO: Let's create post and get utils sometime later 
     //in a separate PR as described here 
     //https://trello.com/c/LDfBFkEN/11-create-post-and-get-helper-utils
-    
+
     const response = yield fetch('/auth/register',
       {
         method: 'POST',
@@ -26,6 +26,6 @@ function* SignUpForSaga({ data }) {
 
 
 
-export function* SignUpSaga() {
-  yield takeEvery(SIGN_UP_FOR_SAGA, SignUpForSaga);
+export function* signUpSaga() {
+  yield takeEvery(SIGN_UP_FOR_SAGA, signUpForSaga);
 }
