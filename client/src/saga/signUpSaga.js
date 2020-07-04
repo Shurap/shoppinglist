@@ -1,6 +1,5 @@
-import { takeEvery, put } from 'redux-saga/effects'
+import { takeEvery } from 'redux-saga/effects'
 import { SIGN_UP_FOR_SAGA } from '../redux/constants'
-import { addUserToStore } from '../redux/actions/actionUser'
 
 function* signUpForSaga({ data }) {
   try {

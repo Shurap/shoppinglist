@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 const PageRegister = () => {
 
   const [form, setForm] = useState({
+    nick: '',
     email: '',
     password: ''
   })
@@ -23,6 +24,14 @@ const PageRegister = () => {
   return (
     <div className="App">
       Page register
+
+      <input
+        name="nick"
+        placeholder="nick"
+        onChange={onChangeForm}
+        value={form.nick}
+      />
+
       <input
         name="email"
         placeholder="e-mail"

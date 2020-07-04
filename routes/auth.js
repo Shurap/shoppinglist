@@ -23,7 +23,7 @@ router.post(
         })
       }
 
-      const { email, password } = req.body
+      const { nick, email, password } = req.body
 
       const candidate = await User.findOne({ email })
 
@@ -32,7 +32,7 @@ router.post(
       }
 
       const hashedPassword = await bcrypt.hash(password, 12)
-      const user = new User({ email, password: hashedPassword })
+      const user = new User({ nick, email, password: hashedPassword })
 
       await user.save()
 
@@ -70,11 +70,13 @@ router.post(
         return res.json({ message: 'User not found' })
       }
 
-      // const isMatch = await bcrypt.compare(password, user.password)
+      //TODO: before production will delete message about password 
 
-      // if (!isMatch) {
-      //   return res.json({ message: 'Wrong password' })
-      // }
+      const isMatch = await bcrypt.compare(password, user.password)
+
+      if (!isMatch) {
+        return res.json({ message: 'Wrong password' })
+      }
 
       const token = jwt.sign(
         { userId: user.id },
@@ -85,7 +87,8 @@ router.post(
       res.json({
         token,
         userId: user.id,
-        email: user.email, message: 'You logged'
+        nick: user.nick,
+        message: 'You logged'
       })
 
     } catch (err) {
