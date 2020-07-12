@@ -1,12 +1,11 @@
 import React from 'react'
 import { useState } from 'react'
-import { SignUpForSaga } from '../../redux/actions/actionSignUp'
+import { doLogInSaga } from '../../redux/actions/actionLogIn'
 import { useDispatch } from 'react-redux';
 
-const PageRegister = () => {
+const PageLogin = () => {
 
   const [form, setForm] = useState({
-    nick: '',
     email: '',
     password: ''
   })
@@ -18,20 +17,12 @@ const PageRegister = () => {
   }
 
   const request = async () => {
-    dispatch(SignUpForSaga(form))
+    dispatch(doLogInSaga(form))
   }
 
   return (
     <div className="App">
-      Page register
-
-      <input
-        name="nick"
-        placeholder="nick"
-        onChange={onChangeForm}
-        value={form.nick}
-      />
-
+      Page login
       <input
         name="email"
         placeholder="e-mail"
@@ -49,4 +40,4 @@ const PageRegister = () => {
   );
 }
 
-export default PageRegister;
+export default PageLogin;
