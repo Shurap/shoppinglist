@@ -1,5 +1,7 @@
 export const SIGN_UP_FOR_SAGA = 'SIGN_UP_FOR_SAGA'
-export const DO_LOG_IN_SAGA = 'DO_LOG_IN_SAGA'
-//TODO make for_saga
+export const DO_LOG_IN_FOR_SAGA = 'DO_LOG_IN_FOR_SAGA'
+export const ADD_NEW_LIST_FOR_SAGA = 'ADD_NEW_LIST_FOR_SAGA'
+export const ADD_NEW_ITEM_FOR_SAGA = 'ADD_NEW_ITEM_FOR_SAGA'
 
 export const ADD_USER_TO_STORE = 'ADD_USER_TO_STORE'
+export const ADD_LISTS_TO_STORE = 'ADD_LISTS_TO_STORE'

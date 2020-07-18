@@ -2,8 +2,9 @@ const { Router } = require('express')
 const router = Router()
 const bcrypt = require('bcryptjs')
 const { check, validationResult } = require('express-validator')
-const User = require('../models/user')
 const jwt = require('jsonwebtoken')
+const { createNewUser, findUser } = require('../controls/controlsUser')
+const { getAllListsFromUser } = require('../controls/controlsList')
 
 // /auth/register
 router.post(
@@ -25,16 +26,14 @@ router.post(
 
       const { nick, email, password } = req.body
 
-      const candidate = await User.findOne({ email })
-
+      const candidate = await findUser({ email })
       if (candidate) {
         return res.json({ message: 'This user already exists' })
       }
 
       const hashedPassword = await bcrypt.hash(password, 12)
-      const user = new User({ nick, email, password: hashedPassword })
 
-      await user.save()
+      await createNewUser(nick, email, hashedPassword)
 
       res.json({ message: 'User created' })
 
@@ -64,8 +63,7 @@ router.post(
 
       const { email, password } = req.body
 
-      const user = await User.findOne({ email })
-
+      const user = await findUser({ email })
       if (!user) {
         return res.json({ message: 'User not found' })
       }
@@ -78,6 +76,8 @@ router.post(
         return res.json({ message: 'Wrong password' })
       }
 
+      const lists = await getAllListsFromUser(user.id);
+
       const token = jwt.sign(
         { userId: user.id },
         process.env.SECRET,
@@ -88,7 +88,8 @@ router.post(
         token,
         userId: user.id,
         nick: user.nick,
-        message: 'You logged'
+        message: 'You logged',
+        lists: lists
       })
 
     } catch (err) {

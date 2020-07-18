@@ -1,7 +1,8 @@
 import React from 'react'
 import { useState } from 'react'
-import { doLogInSaga } from '../../redux/actions/actionLogIn'
-import { useDispatch } from 'react-redux';
+import { doLogInForSaga } from '../../redux/actions/actionLogIn'
+import { useDispatch } from 'react-redux'
+import styles from './PageLogin.module.css'
 
 const PageLogin = () => {
 
@@ -16,12 +17,12 @@ const PageLogin = () => {
     setForm({ ...form, [e.target.name]: e.target.value })
   }
 
-  const request = async () => {
-    dispatch(doLogInSaga(form))
+  const onLogin = async () => {
+    dispatch(doLogInForSaga(form))
   }
 
   return (
-    <div className="App">
+    <div className={styles.page}>
       Page login
       <input
         name="email"
@@ -35,7 +36,7 @@ const PageLogin = () => {
         onChange={onChangeForm}
         value={form.password}
       />
-      <button onClick={request}>Submit</button>
+      <button onClick={onLogin}>Submit</button>
     </div>
   );
 }

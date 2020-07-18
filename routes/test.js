@@ -4,9 +4,9 @@ const middlewareAuth = require('../middleware/middlewareAuth')
 
 router.get('/', middlewareAuth, async (req, res) => {
   try {
-    res.json({ message: 'Тест прошел' })
+    res.json({ message: 'Test passed' })
   } catch {
-    res.json({ message: 'Тест не прошел' })
+    res.json({ message: 'Test did not pass' })
   }
 })
 

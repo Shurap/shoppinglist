@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import { SignUpForSaga } from '../../redux/actions/actionSignUp'
 import { useDispatch } from 'react-redux';
+import styles from './PageRegister.module.css'
 
 const PageRegister = () => {
 
@@ -16,13 +17,16 @@ const PageRegister = () => {
   const onChangeForm = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value })
   }
+  //TODO These handlers get replicated. It looks like we need 
+  // to move them to a separated hook and use it in different components. 
+  // https://trello.com/c/RjnU29Eq/20-useform-hook
 
-  const request = async () => {
+  const onSignUp = async () => {
     dispatch(SignUpForSaga(form))
   }
 
   return (
-    <div className="App">
+    <div className={styles.page}>
       Page register
 
       <input
@@ -44,7 +48,7 @@ const PageRegister = () => {
         onChange={onChangeForm}
         value={form.password}
       />
-      <button onClick={request}>Submit</button>
+      <button onClick={onSignUp}>Submit</button>
     </div>
   );
 }
