@@ -3,7 +3,13 @@ const router = Router()
 const middlewareAuth = require('../middleware/middlewareAuth')
 const { check, validationResult } = require('express-validator')
 const { createNewList, createNewItem } = require('../controls/controlsList')
-const { getAllListsFromUser, findListInUser, findItem } = require('../controls/controlsList')
+const {
+  getAllListsFromUser,
+  findListInUser,
+  findItemInList,
+  findItemInListAndReplace,
+  deleteItemFromList
+} = require('../controls/controlsList')
 
 router.post(
   '/new',
@@ -13,7 +19,6 @@ router.post(
   middlewareAuth,
   async (req, res) => {
     try {
-
       const errors = validationResult(req)
 
       if (!errors.isEmpty()) {
@@ -42,14 +47,13 @@ router.post(
 )
 
 router.post(
-  '/item',
+  '/item/new',
   [
     check('note', 'Enter name of good').notEmpty()
   ],
   middlewareAuth,
   async (req, res) => {
     try {
-
       const errors = validationResult(req)
 
       if (!errors.isEmpty()) {
@@ -61,7 +65,7 @@ router.post(
 
       const { note, count, id, listId, userId } = req.body
 
-      const item = await findItem(note, listId)
+      const item = await findItemInList(note, listId)
       if (item) {
         return res.json({ message: 'This good already existed' })
       }
@@ -73,6 +77,44 @@ router.post(
 
     } catch {
       res.json({ message: 'Error of save new item' })
+    }
+  }
+)
+
+router.post(
+  '/item/change',
+  middlewareAuth,
+  async (req, res) => {
+    try {
+
+      const { note, count, completed, id, listId, userId } = req.body
+
+      await findItemInListAndReplace(listId, id, note, count, completed)
+      
+      const lists = await getAllListsFromUser(userId);
+      res.json({ message: 'Item changed', lists: lists })
+
+    } catch {
+      res.json({ message: 'Error of changing new item' })
+    }
+  }
+)
+
+router.post(
+  '/item/delete',
+  middlewareAuth,
+  async (req, res) => {
+    try {
+
+      const { id, listId, userId } = req.body
+
+      await deleteItemFromList(id, listId)
+      
+      const lists = await getAllListsFromUser(userId);
+      res.json({ message: 'Item deleted', lists: lists })
+
+    } catch {
+      res.json({ message: 'Error of delete item' })
     }
   }
 )

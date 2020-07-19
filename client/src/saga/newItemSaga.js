@@ -6,7 +6,7 @@ import { addListsToStore } from '../redux/actions/actionList'
 function* addNewItemForSaga({ data }) {
   try {
 
-    const post = yield postToServer('/lists/item', data)
+    const post = yield postToServer('/lists/item/new', data)
 
     console.log(post.message)
     if (post.lists) yield put(addListsToStore(post.lists))

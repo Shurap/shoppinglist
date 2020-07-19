@@ -19,7 +19,7 @@ const OneList = (props) => {
     setForm({ ...form, [e.target.name]: e.target.value })
   }
 
-  const onSubmit = () => {
+  const onCreateItem = () => {
     dispatch(addNewItemForSaga({
       note: form.note,
       count: form.count,
@@ -33,6 +33,7 @@ const OneList = (props) => {
     return (
       <div key={element._id}>
         <OneItem
+          listId={props.id}
           id={element._id}
           note={element.note}
           count={element.count}
@@ -60,7 +61,7 @@ const OneList = (props) => {
         value={form.count}
       />
 
-      <button onClick={onSubmit}>Submit</button>
+      <button onClick={onCreateItem}>Create Item</button>
 
       {arrayItems}
     </div>

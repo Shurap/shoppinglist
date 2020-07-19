@@ -3,7 +3,6 @@ import styles from './PageList.module.css'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
-import { getFromServer } from '../../utils/apiServer'
 import { addNewListForSaga } from '../../redux/actions/actionList'
 import OneList from '../OneList/OneList'
 
@@ -24,11 +23,6 @@ const PageList = () => {
     dispatch(addNewListForSaga({ listName, userId }))
   }
 
-  const onClick = async () => {
-    const data = await getFromServer('/test')
-    console.log('data:', data.message)
-  }
-
   const arrayLists = lists.map((element) => {
     return (
       <div key={element.id}>
@@ -45,8 +39,6 @@ const PageList = () => {
     <div className={styles.page}>
       PageList
       <div>{arrayLists}</div>
-
-      <button onClick={onClick}>Test</button>
 
       <input
         name="listname"

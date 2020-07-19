@@ -6,7 +6,6 @@ exports.createNewList = async (listName, userId) => {
   const list = new List({ title: listName })
   list.users.push(userId)
   await list.save()
-
   await addNewListToUser(userId, list._id)
 }
 
@@ -32,10 +31,28 @@ exports.findListInUser = async (listName, userId) => {
   return data
 }
 
-exports.findItem = async (itemName, listId) => {
+exports.findItemInList = async (itemName, listId) => {
   const list = await List.findById(listId)
   const data = list.list.find((element) => {
     return (element.note === itemName)
   })
   return data
 } 
+
+exports.findItemInListAndReplace = async (listId, id, note, count, completed) => {
+  const list = await List.findById(listId)
+  list.list.forEach((element) => {
+    if (element._id.toString() === id) {
+      element.note = note
+      element.count = count
+      element.completed = completed
+    }
+  })
+  await list.save()
+} 
+
+exports.deleteItemFromList = async (id, listId) => {
+  const list = await List.findById(listId)
+  list.list.id(id).remove()
+  await list.save()
+}
