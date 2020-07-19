@@ -3,6 +3,7 @@ import styles from './OneList.module.css'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addNewItemForSaga } from '../../redux/actions/actionItem'
+import { deleteListForSaga } from '../../redux/actions/actionList'
 import OneItem from '../OneItem/OneItem'
 
 const OneList = (props) => {
@@ -29,6 +30,14 @@ const OneList = (props) => {
     }))
   }
 
+  const onDeleteList = () => {
+    dispatch(deleteListForSaga({
+      listId: props.id,
+      userId
+    }))
+
+  }
+
   const arrayItems = props.list.map((element) => {
     return (
       <div key={element._id}>
@@ -46,7 +55,8 @@ const OneList = (props) => {
   return (
     <div className={styles.page}>
       {props.title}
-      {/* {props.id} */}
+
+      <button onClick={onDeleteList}>Delete list {props.title}</button>
 
       <input
         name="note"

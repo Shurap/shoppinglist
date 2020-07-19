@@ -8,7 +8,8 @@ const {
   findListInUser,
   findItemInList,
   findItemInListAndReplace,
-  deleteItemFromList
+  deleteItemFromList,
+  deleteListFromUser
 } = require('../controls/controlsList')
 
 router.post(
@@ -42,6 +43,25 @@ router.post(
 
     } catch {
       res.json({ message: 'Error of save new list' })
+    }
+  }
+)
+
+router.post(
+  '/delete',
+  middlewareAuth,
+  async (req, res) => {
+    try {
+
+      const { listId, userId } = req.body
+
+      await deleteListFromUser(listId)
+
+      const lists = await getAllListsFromUser(userId);
+      res.json({ message: 'List deleted', lists: lists })
+
+    } catch {
+      res.json({ message: 'Error of delete list' })
     }
   }
 )
@@ -90,7 +110,7 @@ router.post(
       const { note, count, completed, id, listId, userId } = req.body
 
       await findItemInListAndReplace(listId, id, note, count, completed)
-      
+
       const lists = await getAllListsFromUser(userId);
       res.json({ message: 'Item changed', lists: lists })
 
@@ -109,7 +129,7 @@ router.post(
       const { id, listId, userId } = req.body
 
       await deleteItemFromList(id, listId)
-      
+
       const lists = await getAllListsFromUser(userId);
       res.json({ message: 'Item deleted', lists: lists })
 

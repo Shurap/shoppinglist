@@ -5,7 +5,6 @@ import { addListsToStore } from '../redux/actions/actionList'
 
 function* doDeleteItemForSaga({ data }) {
   try {
-    console.log(data)
     const post = yield postToServer('/lists/item/delete', data)
 
     console.log(post.message)

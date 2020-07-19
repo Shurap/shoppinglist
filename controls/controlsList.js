@@ -53,6 +53,12 @@ exports.findItemInListAndReplace = async (listId, id, note, count, completed) =>
 
 exports.deleteItemFromList = async (id, listId) => {
   const list = await List.findById(listId)
+  console.log(list.list)
   list.list.id(id).remove()
   await list.save()
+}
+
+exports.deleteListFromUser = async (listId) => {
+  const list = await List.findById(listId)
+  list.remove()
 }

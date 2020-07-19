@@ -5,6 +5,7 @@ import { newListSaga } from './newListSaga'
 import { newItemSaga } from './newItemSaga'
 import { changeItemSaga } from './changeItemSaga'
 import { deleteItemSaga } from './deleteItemSaga'
+import { deleteListSaga } from './deleteListSaga'
 
 export function* mainSaga() {
   yield all([
@@ -13,6 +14,7 @@ export function* mainSaga() {
     fork(newListSaga),
     fork(newItemSaga),
     fork(changeItemSaga),
-    fork(deleteItemSaga)
+    fork(deleteItemSaga),
+    fork(deleteListSaga)
   ])
 }
