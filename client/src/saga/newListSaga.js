@@ -5,10 +5,10 @@ import { addListsToStore } from '../redux/actions/actionList'
 
 function* addNewListForSaga({ data }) {
   try {
-    const response = yield postToServer('/lists/new', data)
+    const post = yield postToServer('/lists/new', data)
 
-    console.log(response.message)
-    yield (response.lists) ? put(addListsToStore(response.lists)) : put(addListsToStore([]))
+    console.log(post.message)
+    if (post.lists) yield put(addListsToStore(post.lists))
 
   } catch (error) {
     console.log('saga add new list error')

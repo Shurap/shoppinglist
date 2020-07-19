@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './OneList.module.css'
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addNewItemForSaga } from '../../redux/actions/actionItem'
 import OneItem from '../OneItem/OneItem'
 
@@ -12,6 +12,7 @@ const OneList = (props) => {
     count: ''
   })
 
+  const userId = useSelector((state) => state.user.userId)
   const dispatch = useDispatch()
 
   const onChangeForm = (e) => {
@@ -22,7 +23,9 @@ const OneList = (props) => {
     dispatch(addNewItemForSaga({
       note: form.note,
       count: form.count,
-      id: props.id
+      id: props.id,
+      listId: props.id,
+      userId
     }))
   }
 

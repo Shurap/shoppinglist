@@ -23,3 +23,19 @@ exports.createNewItem = async (note, count, id) => {
   list.list.push({ note, count, completed: false })
   await list.save()
 }
+
+exports.findListInUser = async (listName, userId) => {
+  const lists = await this.getAllListsFromUser(userId)
+  const data = lists.find((element) => {
+    return (element.title === listName)
+  })
+  return data
+}
+
+exports.findItem = async (itemName, listId) => {
+  const list = await List.findById(listId)
+  const data = list.list.find((element) => {
+    return (element.note === itemName)
+  })
+  return data
+} 
