@@ -1,27 +1,58 @@
 import React from 'react'
+import styles from './PageList.module.css'
+import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
+import { addNewListForSaga } from '../../redux/actions/actionList'
+import OneList from '../OneList/OneList'
 
 const PageList = () => {
 
-  const onClick = async () => {
+  const dispatch = useDispatch()
 
-    const token = (localStorage.getItem('userInfo')) ? JSON.parse(localStorage.getItem('userInfo')).token : null
+  const userId = useSelector((state) => state.user.userId)
+  const lists = useSelector((state) => state.lists.lists)
 
-    const fetched = await fetch('/test',
-      {
-        method: 'GET',
-        body: null,
-        headers: { Authorization: `Bearer ${token}` }
-      })
-    const post = await fetched.json()
-    console.log('post:', post.message)
+  const [listName, setListName] = useState('')
+
+  const onChangeListName = (e) => {
+    setListName(e.target.value)
   }
 
+  const onSubmitListName = () => {
+    dispatch(addNewListForSaga({ listName, userId }))
+  }
+
+  const arrayLists = lists.map((element) => {
+    return (
+      <div key={element.id}>
+        <OneList
+          id={element.id}
+          title={element.title}
+          list={element.list}
+        />
+      </div>
+    )
+  })
 
   return (
-    <div>
-      <button onClick={onClick}>Test</button>
+    <div className={styles.page}>
+      PageList
+      <div>{arrayLists}</div>
+
+      <input
+        name="listname"
+        placeholder="listname"
+        onChange={onChangeListName}
+        value={listName}
+      />
+
+      <button onClick={onSubmitListName}>New list</button>
+
     </div>
   )
 }
+
+//completed
 
 export default PageList

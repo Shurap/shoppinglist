@@ -12,7 +12,6 @@ const App = () => {
       <PageRegister />
       <PageLogin />
       <PageList />
-      
     </div>
   )
 }

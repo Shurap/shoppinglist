@@ -1,17 +1,13 @@
 import { takeEvery, put } from 'redux-saga/effects'
-import { DO_LOG_IN_SAGA } from '../redux/constants'
+import { DO_LOG_IN_FOR_SAGA } from '../redux/constants'
 import { addUserToStore } from '../redux/actions/actionUser'
+import { addListsToStore } from '../redux/actions/actionList'
+import { postToServerWithoutToken } from '../utils/apiServer'
 
-function* doLogInSaga({ data }) {
+function* doLogInForSaga({ data }) {
   try {
-    const response = yield fetch('/auth/login',
-      {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: { 'Content-Type': 'application/json' },
-      })
 
-    const post = yield response.json()
+    const post = yield postToServerWithoutToken('/auth/login', data)
 
     yield localStorage.setItem('userInfo', JSON.stringify({
       userId: post.userId, token: post.token
@@ -21,6 +17,8 @@ function* doLogInSaga({ data }) {
 
     //TODO component showed all messages
     console.log(post.message)
+    yield (post.lists) ? put(addListsToStore(post.lists)) : put(addListsToStore([]))
+
 
   } catch (error) {
     console.log('saga login error')
@@ -28,5 +26,5 @@ function* doLogInSaga({ data }) {
 }
 
 export function* logInSaga() {
-  yield takeEvery(DO_LOG_IN_SAGA, doLogInSaga);
+  yield takeEvery(DO_LOG_IN_FOR_SAGA, doLogInForSaga);
 }
